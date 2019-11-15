@@ -27,7 +27,8 @@ class App extends React.Component {
             }
         });
         const result = await has_position;
-        console.log(result);
+         //console.log(result);
+
         if (result) {
             let prom_coord = fetch('http://api.openweathermap.org/data/2.5/weather?lat='
                 + component.state.latitude + '&lon=' + component.state.longitude
@@ -36,16 +37,20 @@ class App extends React.Component {
             const weatherres = await((await prom_coord).json());
             // console.log(weatherres);
             component.setState({sun_up:new Date(weatherres.sys.sunrise * 1000), sun_down:new Date(weatherres.sys.sunset * 1000)});
-            var sunrisetime = component.state.sun_up.getHours() + ':' + component.state.sun_up.getMinutes();
-            var sunsettime = component.state.sun_down.getHours() + ':' + component.state.sun_down.getMinutes();
+
+            let sunrisetime = component.state.sun_up.getHours() + ':' + component.state.sun_up.getMinutes();
+            let sunsettime = component.state.sun_down.getHours() + ':' + component.state.sun_down.getMinutes();
             let currentTime = (new Date()).getTime() / 1000;
             let sundownTime = component.state.sun_down.getTime() / 1000;
             let sunupTime = component.state.sun_up.getTime() /1000;
             const sun_down_bool = currentTime > (sundownTime - 3600) && currentTime < (sundownTime + 3600);
             const sun_up_bool = currentTime > (sunupTime + 82800) && currentTime < (sunupTime + 90000);
-console.log('hi' + sun_up_bool + sunupTime + currentTime)
-            component.setState({weather:weatherres, main_weather:weatherres.weather[0].main, sunrise:sunrisetime, sunset:sunsettime, night:currentTime > (sundownTime + 3600)
-                , time:currentTime, sunDown:sun_down_bool, sunUp:sun_up_bool});
+
+            //console.log('Openweathermap info: ' + sun_up_bool + sunupTime + currentTime)
+            component.setState({weather:weatherres, main_weather:weatherres.weather[0].main,
+                    sunrise:sunrisetime, sunset:sunsettime, night:currentTime > (sundownTime + 3600),
+                    time:currentTime, sunDown:sun_down_bool, sunUp:sun_up_bool});
+
         } else {
             alert('please allow location services');
         }

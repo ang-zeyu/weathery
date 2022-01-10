@@ -32,7 +32,7 @@ class App extends React.Component {
         if (result) {
             let prom_coord = fetch('http://api.openweathermap.org/data/2.5/weather?lat='
                 + component.state.latitude + '&lon=' + component.state.longitude
-                + '&appid=f9655cc4f6b2e05ff5e3e6d316b0a1fd');
+                + '&appid=3fd8866bbc905fd9deafe9c8aad1200e');
             // console.log(prom_coord);
             const weatherres = await((await prom_coord).json());
             // console.log(weatherres);
